@@ -27,12 +27,11 @@ def sync_tasks(new_db_inst: dict):
     db_file = os.path.join(os.getcwd(), "db", "data.json")
 
     with open(db_file, "w") as file:
-        json.dump(new_db_inst, file)
+        json.dump(new_db_inst, file) # should probably get DB manually after this
 
-def create_task(content: str, dest_id: int) -> dict:
-    list_of_tasks_lists = ["to-do", "in-progress", "done", "cancelled"] # I can just use indexes
+def create_task(content: str, destination: str) -> dict:
     db = get_or_create_db()
-    db[list_of_tasks_lists[dest_id]].append(content) # Call sync manually!
+    db[destination].append(content) # Call sync manually!
     return db
 
 def move_task(source_addr, source_id, dest_addr):

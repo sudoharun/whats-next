@@ -7,10 +7,6 @@ from .lists import (
     DoneList,
     CancelledList
 )
-from .dialogs import (
-    AddTaskOverlay,
-    ModifyTaskOverlay
-)
 from gi.repository import Gtk
 
 
@@ -30,13 +26,16 @@ class TitleBar(Gtk.HeaderBar):
         self.set_title_widget(stack_switcher)
 
 
-class MainContainer(Gtk.Box):
+class MainContainer(Gtk.Overlay):
     def __init__(self):
-        super().__init__(
+        super().__init__()
+
+        self.container = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
             vexpand=True,
             hexpand=True
         )
+        self.set_child(self.container)
 
         self.stack = Gtk.Stack(
             vexpand=True,
@@ -47,14 +46,8 @@ class MainContainer(Gtk.Box):
         self.stack.add_titled(DoneList(), "Done", "Done")
         self.stack.add_titled(CancelledList(), "Cancelled", "Cancelled")
 
-        self.overlay = Gtk.Overlay(
-            vexpand=True,
-            hexpand=True,
-            child=self.stack
-        )
-
-        self.append(TitleBar(self.stack))
-        self.append(self.overlay)
+        self.container.append(TitleBar(self.stack))
+        self.container.append(self.stack)
 
 
 if __name__ == "__main__":

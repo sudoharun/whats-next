@@ -2,6 +2,10 @@ import gi
 gi.require_version('Gtk', '4.0')
 
 import backend
+from .dialogs import (
+    AddTaskOverlay,
+    ModifyTaskOverlay
+)
 from gi.repository import Gtk
 
 
@@ -33,7 +37,18 @@ class BaseList(Gtk.Box):
 class ToDoList(BaseList):
     def __init__(self):
         super().__init__(list_name="to-do")
-        self.append(Gtk.Label(label="To do"))
+        self.add_task_widget = Gtk.Box(halign=Gtk.Align.CENTER, spacing=8)
+        self.add_task_widget.append(Gtk.Label(label="Add Task"))
+        self.add_task_button = Gtk.Button()
+        self.add_task_widget.append(self.add_task_button)
+
+        self.add_task_button.set_child(Gtk.Image(icon_name="add", pixel_size=18))
+        self.add_task_button.connect("clicked", self.add_task_func)
+
+        self.append(self.add_task_widget)
+
+    def add_task_func(self, widget):
+        self.get_parent().get_parent().get_parent().add_overlay(AddTaskOverlay("to-do"))
 
 
 class InProgressList(BaseList):
