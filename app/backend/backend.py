@@ -29,7 +29,7 @@ def sync_tasks(new_db_inst: dict):
     with open(db_file, "w") as file:
         json.dump(new_db_inst, file) # should probably get DB manually after this
 
-def create_task(content: str, destination: str) -> dict:
+def create_task(destination: str, content: str) -> dict:
     db = get_or_create_db()
     db[destination].append(content) # Call sync manually!
     return db

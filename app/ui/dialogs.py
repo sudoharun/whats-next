@@ -33,14 +33,14 @@ class AddTaskOverlay(Gtk.Box):
     def on_save(self, *_):
         # Get text from entry
         # (Later) Confirm addition
+        backend.sync_tasks(backend.create_task(self.list_name, self.entry.get_text()))
         # Save to DB
         # Sync DB to widgets
         # Remove overlay (if entry is filled from last time, clear entry before)
-        pass
+        self.get_parent().reset_overlay()
 
     def on_cancel(self, *_):
-        # Remove overlay (if entry is filled from last time, clear entry before)
-        pass
+        self.get_parent().reset_overlay()
 
 
 class ModifyTaskOverlay(Gtk.Box):
