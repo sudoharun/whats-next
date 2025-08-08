@@ -2,7 +2,6 @@ import gi
 gi.require_version('Gtk', '4.0')
 
 import backend
-from posix import sync
 from gi.repository import Gtk
 
 
