@@ -1,14 +1,12 @@
 import os
 import json
 import backend
-from ui.window import (
-    TitleBar,
-    MainContainer
-)
+from ui.window import MainContainer
 import gi
 
 gi.require_version("Gtk", "4.0")
-from gi.repository import Gtk, Gio
+gi.require_version("Gdk", "4.0")
+from gi.repository import Gtk, Gio, Gdk
 
 
 class ToDoApp(Gtk.Application):
@@ -18,9 +16,19 @@ class ToDoApp(Gtk.Application):
         backend.get_or_create_db()
 
     def on_activate(self, app):
+        self.load_css()
         window = Gtk.ApplicationWindow(application=app)
         window.set_child(MainContainer())
         window.present()
+
+    def load_css(self):
+        provider = Gtk.CssProvider()
+        provider.load_from_path(os.path.join(os.getcwd(), "styling", "styles.css"))
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(),
+            provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
 
 
 # ------------------ EOF ------------------ #
