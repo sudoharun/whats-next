@@ -95,7 +95,7 @@ class BaseList(Gtk.Box):
         backend.sync_tasks(db)
 
     def edit_task(self, li_index, list_name):
-        self.main_ancestor = self.get_parent().get_parent().get_parent()
+        self.main_ancestor = self.get_parent().get_parent()
         self.main_ancestor.set_overlay(ModifyTaskOverlay(list_name, li_index))
 
     def delete_task(self, li_index):
@@ -127,7 +127,7 @@ class ToDoList(BaseList):
         self.refresh_data()
 
     def add_task(self, widget):
-        self.main_ancestor = self.get_parent().get_parent().get_parent()
+        self.main_ancestor = self.get_parent().get_parent()
         self.main_ancestor.set_overlay(AddTaskOverlay("to-do"))
 
     def create_list_item(self, li, index):

@@ -1,7 +1,6 @@
 import os
-import json
 import backend
-from ui.window import MainContainer
+from ui.window import TitleBar, MainContainer
 import gi
 
 gi.require_version("Gtk", "4.0")
@@ -19,6 +18,7 @@ class ToDoApp(Gtk.Application):
         self.load_css()
         window = Gtk.ApplicationWindow(application=app)
         window.set_child(MainContainer())
+        window.set_titlebar(TitleBar(window.get_child().stack))
         window.present()
 
     def load_css(self):

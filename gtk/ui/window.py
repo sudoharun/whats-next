@@ -38,13 +38,6 @@ class MainContainer(Gtk.Overlay):
 
         self.overlay = None
 
-        self.container = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL,
-            vexpand=True,
-            hexpand=True
-        )
-        self.set_child(self.container)
-
         self.to_do_list = ToDoList()
         self.in_progress_list = InProgressList()
         self.done_list = DoneList()
@@ -59,8 +52,7 @@ class MainContainer(Gtk.Overlay):
         self.stack.add_titled(self.done_list, "Done", "Done")
         self.stack.add_titled(self.cancelled_list, "Cancelled", "Cancelled")
 
-        self.container.append(TitleBar(self.stack))
-        self.container.append(self.stack)
+        self.set_child(self.stack)
 
     def set_overlay(self, widget):
         if widget is not None and self.overlay is None:
